@@ -2,6 +2,7 @@
 //Make sure that you have included these .zip libraries in your Arduino installation
 #include <FastLED.h>
 #include "RTClib.h"
+#include <EEPROM.h>
 
 //Initialize the I/O Pin we will use
 #define LED_PIN 7
@@ -18,6 +19,8 @@ DateTime now;
 
 //Initialize the variables we will use
 int lastMinute = 0;                 //Will be used to check if the minute is now different. Used to update the displayed time
+int EEPROMaddr = 0;                 //Used for updating the time to be displayed from the RTC as an address in the EEPROM
+int EEPROMval = 0;                  //Used for updating the time to be displayed from the RTC as a value written/read to/from the EEPROM
 bool Select_FiveThirtyFace = true;   //true displays LEDs based on the FiveThirty Grid, false displays LEDs based on the HalfTo Grid
 
 
@@ -114,10 +117,26 @@ void setup(){
     Serial.flush();
     abort();
   }
+
+  //Read the EEPROM value at address 0, if it is 255 (denoting a new Arduino with default EEPROM)
+  //OR if it is 254 (denoting the real time clock [RTC] had lost power since the last programming)
+  //THEN update the time on the RTC to match the compile time of this code
+  EEPROMval = EEPROM.read(0);
+  if(EEPROMval == 255 or EEPROMval == 254)
+  {
+    rtc.adjust(DateTime(F(__DATE__),F(__TIME__)));
+    EEPROM.write(0,1);//Write "1" to the EEPROM at address "0" to lockout this function until RTC powerloss
+  }
   
   //Check if the RTC has lost power since it was last connected/setup
   if (rtc.lostPower()) {
     Serial.println("RTC lost power, let's set the time!");
+
+    //Write the value "254" to the EEPROM at address "0" to note that the RTC experienced a powerloss.
+    //The powerloss will make the Time displayed inaccurate, so the clock will need to be reprogrammed
+    //to fix this inaccuracy. The "254" value will allow the program to update the time the next time it
+    //is programmed
+    EEPROM.write(0,254);
     
     // When time needs to be set on a new device, or after a power loss, the
     // following line sets the RTC to the date & time this sketch was compiled
