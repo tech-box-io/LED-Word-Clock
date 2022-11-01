@@ -1,7 +1,7 @@
 //Start by including the needed libraries
 //Make sure that you have included these .zip libraries in your Arduino installation
-#include <FastLED.h>
-#include "RTClib.h"
+#include "src/FastLED.h"
+#include "src/RTClib.h"
 #include <EEPROM.h>
 
 //Initialize the I/O Pin we will use
