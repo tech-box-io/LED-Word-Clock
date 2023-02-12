@@ -224,9 +224,6 @@ void TimeUpdateFT()
     //In the color_presetx(y) function call, the x is the preset chosen (1-5), and y is the order the word appears on the face
     //The first word would have a y value of 1, the second would have a y value of 2, etc.
     leds[j] = color_preset3(1);    
-
-    //If you wish for each letter to have a rainbow color assigned to it, comment out the line above, and uncomment the below preset:
-    //leds[j] = color_presetRL();
   }
 
   //For each LED in the length of the minuteDisplay pointer, set that LED to be illuminated on the next FastLED.show() call
@@ -237,9 +234,6 @@ void TimeUpdateFT()
     //In the color_presetx(y) function call, the x is the preset chosen (1-5), and y is the order the word appears on the face
     //The first word would have a y value of 1, the second would have a y value of 2, etc.
     leds[j] = color_preset3(2);   
-
-    //If you wish for each letter to have a rainbow color assigned to it, comment out the line above, and uncomment the below preset:
-    //leds[j] = color_presetRL();
   }
 
   //Show the LEDs to be illuminated
@@ -318,9 +312,6 @@ void TimeUpdateHT()
     //In the color_presetx(y) function call, the x is the preset chosen (1-5), and y is the order the word appears on the face
     //The first word would have a y value of 1, the second would have a y value of 2, "of/to" will always have a value of 3
     leds[j] = color_preset1(2);    
-
-    //If you wish for each letter to have a rainbow color assigned to it, comment out the line above, and uncomment the below preset:
-    //leds[j] = color_presetRL();
   }
 
   //For each LED in the length of the OTDisplay pointer, set that LED to be illuminated on the next FastLED.show() call
@@ -331,9 +322,6 @@ void TimeUpdateHT()
     //In the color_presetx(y) function call, the x is the preset chosen (1-5), and y is the order the word appears on the face
     //The first word would have a y value of 1, the second would have a y value of 2, "of/to" will always have a value of 3
     leds[j] = color_preset1(3);
-
-    //If you wish for each letter to have a rainbow color assigned to it, comment out the line above, and uncomment the below preset:
-    //leds[j] = color_presetRL();
   }
 
   //For each LED in the length of the minuteDisplay pointer, set that LED to be illuminated on the next FastLED.show() call
@@ -344,9 +332,6 @@ void TimeUpdateHT()
     //In the color_presetx(y) function call, the x is the preset chosen (1-5), and y is the order the word appears on the face
     //The first word would have a y value of 1, the second would have a y value of 2, "of/to" will always have a value of 3
     leds[j] = color_preset1(1);
-
-    //If you wish for each letter to have a rainbow color assigned to it, comment out the line above, and uncomment the below preset:
-    //leds[j] = color_presetRL();
   }
 
   //Show the LEDs to be illuminated
@@ -435,12 +420,4 @@ CRGB color_preset4(int sequence)
 CRGB color_preset5(int sequence)
 {
   return CRGB(218,80,214);
-}
-
-
-//This preset assigns each letter of the time a random color using the HSV mode of FastLED
-CHSV color_presetRL()
-{
-  //Use the CHSV function here to maintain a consistent brightness while varying the color  
-  return CHSV(random(0,255), 255, 255);
 }
